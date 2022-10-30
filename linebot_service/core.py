@@ -5,6 +5,16 @@ from linebot.models import MessageEvent, TextMessage, TextSendMessage, SourceUse
 
 class BotApi(LineBotApi):
 
+    def __init__(self, access_token, channel_secret):
+        super().__init__(access_token)
+        self.web_handler = WebhookHandler(channel_secret)
+
+    def bot_handler(self):
+        return self.web_handler
+
+    def exception(self):
+        return InvalidSignatureError
+
     def reply_text_message(self, token, msg):
         text_send_msg = TextSendMessage(msg)
         self.reply_message(token, text_send_msg)
@@ -27,6 +37,8 @@ class BotApi(LineBotApi):
 
 
 class MessageTemplate():
+    def __init__():
+        pass
 
     def get_text_msg(msg):
         return TextSendMessage(msg)
@@ -38,7 +50,6 @@ class MessageTemplate():
         )
 
     def get_carousel_msg(carousel_data):
-
         columns = []
         for item in carousel_data:
             columns.append(CarouselColumn(

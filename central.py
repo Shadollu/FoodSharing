@@ -1,13 +1,13 @@
 import random
 from flask import Flask, request, abort
-from linebot_service.core import BotApi, WebhookHandler, InvalidSignatureError, MessageEvent, TextMessage, MessageAction, URIAction, PostbackAction, StickerMessage
+from linebot_service.core import BotApi, MessageEvent, TextMessage, StickerMessage
 
 app = Flask(__name__)
 app.config.from_object('config')
 
 # LINE 聊天機器人的基本資料
-bot = BotApi(app.config['CHANNEL_ACCESS_TOKEN'])
-handler = WebhookHandler(app.config['CHANNEL_SECRET'])
+bot = BotApi(app.config['CHANNEL_ACCESS_TOKEN'], app.config['CHANNEL_SECRET'])
+handler = bot.bot_handler()
 
 
 @app.route("/", methods=['POST'])
@@ -22,7 +22,7 @@ def callback():
         print(body, signature)
         handler.handle(body, signature)
 
-    except InvalidSignatureError:
+    except bot.exception():
         abort(400)
 
     return 'OK'
