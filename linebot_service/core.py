@@ -7,10 +7,15 @@ class BotApi(LineBotApi):
 
     def __init__(self, access_token, channel_secret):
         super().__init__(access_token)
-        self.web_handler = WebhookHandler(channel_secret)
+        self.web_handler = (channel_secret)
 
-    def bot_handler(self):
-        return self.web_handler
+    @property
+    def web_handler(self):
+        return self._web_handler
+
+    @web_handler.setter
+    def web_handler(self, secret):
+        self._web_handler = WebhookHandler(secret)
 
     def exception(self):
         return InvalidSignatureError

@@ -7,7 +7,7 @@ app.config.from_object('config')
 
 # LINE 聊天機器人的基本資料
 bot = BotApi(app.config['CHANNEL_ACCESS_TOKEN'], app.config['CHANNEL_SECRET'])
-handler = bot.bot_handler()
+handler = bot.web_handler
 
 
 @app.route("/", methods=['POST'])
