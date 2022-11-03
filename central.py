@@ -30,29 +30,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
-    if event.message.text == '不想動腦':
-        bot.reply_img_message(event.reply_token)
 
-    # 自選某式 -> Template message：Carousel template
-    elif event.message.text == '自選某式':
-        bot.reply_carousel_message(event.reply_token)
-
-    # 選購食材 -> Sticker message
-    elif event.message.text == '添購食材':
-        package_id = 1
-        sticker_id = 12
-        bot.reply_sticker_message(event.reply_token, package_id, sticker_id)
-
-    else:
-        # 學你說話外加彩色的愛
-        pretty_note = '❤🧡💛💚💙💜🤎🖤🤍'
-        pretty_text = ''
-
-        for i in event.message.text:
-            pretty_text += i
-            pretty_text += random.choice(pretty_note)
-
-        bot.reply_text_message(event.reply_token, pretty_text)
+    try:
+        bot.text_process(event)
+    except bot.exception():
+        abort(401)
 
 
 @handler.add(MessageEvent, message=StickerMessage)

@@ -20,6 +20,12 @@ class BotApi(LineBotApi):
     def exception(self):
         return InvalidSignatureError
 
+    def text_process(self, event):
+        message_text = event.message.text
+
+        if message_text == '不想動腦':
+            self.reply_img_message(event.reply_token)
+
     def reply_text_message(self, token, msg):
         text_send_msg = TextSendMessage(msg)
         self.reply_message(token, text_send_msg)
