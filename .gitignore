@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 
 # config
+config.ini
 config.py
 
 #vscocde
